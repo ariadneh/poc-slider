@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react'
+import './App.css'
 
-function App() {
+const App = () => {
+  const [minRange, setMinRange] = useState(0)
+  const [maxRange, setMaxRange] = useState(5000)
+  const handleMinRange = (e) => {
+    setMinRange(e.target.value)
+  }
+  const handleMaxRange = (e) => {
+    setMaxRange(e.target.value)
+  }
+  const showValues = () => {
+    if (maxRange < minRange) {
+      return (
+        <>
+          R$ {maxRange}
+          R$ {minRange}
+        </>
+      )
+    }
+
+    return (
+      <>
+        R$ {minRange}
+        R$ {maxRange}
+      </>
+    )
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <input type='range' name='slider' id='slider' min='100' max='5000' step='100' onChange={handleMinRange} value={minRange} />
+      <input type='range' name='slider' id='slider' min='100' max='5000' value={maxRange} step='100' onChange={handleMaxRange} />
+      {showValues()}
+      <span style={{ width: '100%', position: 'absolute' }} />
+    </>
+  )
 }
 
-export default App;
+export default App
