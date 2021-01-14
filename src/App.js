@@ -2,25 +2,12 @@ import { useState } from 'react'
 import './App.css'
 
 const App = () => {
-  // const [minRange, setMinRange] = useState(0)
-  // const [maxRange, setMaxRange] = useState(5000)
-
-  const [range, setRange] = useState([0, 5000])
   const [iMin, iMax] = [0, 5000]
-  const [min, max] = range
-
-  const handleRange = (e) => {
-    const { value } = e.target
-    const tAndrera = (value - iMin > iMax - value)
-
-    if ((value >= max) || (value >= min && value <= max && !tAndrera)) {
-      setRange([min, value])
-    } else if ((value <= min) || (value >= min && value <= max && tAndrera)) {
-      setRange([value, max])
-    }
-  }
+  const [range, setRange] = useState([0, 5000])
+  const [firstValue, secondValue] = range
 
   const showValues = () => {
+    const [min, max] = range.sort((a, b) => a - b)
     return (
       <>
         <label htmlFor='minrange'>
@@ -34,8 +21,8 @@ const App = () => {
   }
   return (
     <>
-      <input type='range' name='minrange' id='slider' min={iMin} max={iMax} defaultValue={iMin} step='100' onChange={handleRange} />
-      <input type='range' name='maxrange' id='slider-max' min={iMin} max={iMax} defaultValue={iMax} step='100' onChange={handleRange} />
+      <input type='range' name='minrange' id='input1' min={iMin} max={iMax} defaultValue={iMin} step='100' value={firstValue} onChange={(e) => setRange([e.target.value, secondValue])} />
+      <input type='range' name='maxrange' id='input2' min={iMin} max={iMax} defaultValue={iMax} step='100' value={secondValue} onChange={(e) => setRange([firstValue, e.target.value])} />
       {showValues()}
       <span style={{ width: '100%', position: 'absolute' }} />
     </>
